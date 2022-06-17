@@ -1,8 +1,10 @@
 <?php
+session_start();
+
 //includeで関数を呼び出す　require_once('funcs.php');＝include("funcs.php");どちらでもOK
 include("funcs.php");
-
 loginCheck();
+
 
 //DBへ接続
 $pdo = db_connect();

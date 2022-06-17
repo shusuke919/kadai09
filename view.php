@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // getでIDを取得
 $id = $_GET["id"];
 

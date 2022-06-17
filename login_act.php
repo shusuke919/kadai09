@@ -21,11 +21,12 @@ try{
 
 
 //データ登録SQL作成
-$sql =  "SELECT * FROM kadai_user_table WHERE u_id = :lid AND u_pw = :lpw";
+$sql =  "SELECT * FROM kadai_user_table WHERE u_id = :lid;";
 $stmt = $pdo->prepare($sql);
 //bindvAalueにphp変数を渡してDBに渡す必要がある　bindValueは：が必ずつく
 $stmt->bindValue(':lid', $lid, PDO::PARAM_STR); 
-$stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR); 
+// *Hash化する場合はコメントする
+// $stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR); 
 //execute 実行する
 $status = $stmt->execute();
 
@@ -39,10 +40,10 @@ if($status==false) {
 // 抽出データ数を取得
 $val = $stmt->fetch(); //１レコードだけ取得可能
 
-if ($val['id'] != '') {
+if ($val['id'] != '' && password_verify($lpw, $val['u_pw'])) {
   //Login成功時 該当レコードがあればSESSIONに値を代入
   $_SESSION['chk_ssid'] = session_id();
-  $_SESSION['kanri_flg'] = $val['kanri_flg'];
+  // $_SESSION['kanri_flg'] = $val['kanri_flg'];
   $_SESSION['name'] = $val['name'];
   header('Location: select.php');
 } else {

@@ -27,11 +27,12 @@ while ( $r = $stmt->fetch(PDO::FETCH_ASSOC)){
  $view .= '</a>';
  $view .= "　";
 
- if($_SESSION['kanri_flg']){
-  $view .= '<a class="btn btn-danger" href="delete.php?id=' . $r['u_id'] . '">';
-  $view .= '[<i class="glyphicon glyphicon-remove"></i>削除]';
-  $view .= '</a>';
-}
+//管理フラグ一旦コメント
+//  if($_SESSION['kanri_flg']){
+//   $view .= '<a class="btn btn-danger" href="delete.php?id=' . $r['u_id'] . '">';
+//   $view .= '[<i class="glyphicon glyphicon-remove"></i>削除]';
+//   $view .= '</a>';
+// }
 
  $view .= '</p>';
 

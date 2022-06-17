@@ -3,39 +3,38 @@ session_start();
 
 //includeで関数を呼び出す　require_once('funcs.php');＝include("funcs.php");どちらでもO
 include("funcs.php");
-loginCheck();
+
 // 入力チェック（受信確認処理追加）
 if(
   !isset($_GET["name"]) || $_GET["name"]=="" ||
-  !isset($_GET["email"]) || $_GET["email"]=="" ||
-  !isset($_GET["naiyou"]) || $_GET["naiyou"]=="" ||
-  !isset($_GET["age2"]) || $_GET["age2"]==""
+  !isset($_GET["lid"]) || $_GET["lid"]=="" ||
+  !isset($_GET["lpw"]) || $_GET["lpw"]=="" 
 ){
   exit('ParamError');
 }
 
 // getデータ取得
+$u_id = $_GET["lid"];
+$u_pw = $_GET["lpw"];
 $name = $_GET["name"];
-$email = $_GET["email"];
-$naiyou = $_GET["naiyou"];
-$age2 = $_GET["age2"];
-// echo  $name. "<br>";
-// echo  $mail. "<br>";
 
-
+// echo $name;
 
 //DBへ接続
 $pdo = db_connect();
 
 // データ登録　SQL作成
-$stmt = "INSERT INTO kadai_an_db(id, name, email, naiyou, age2, 
-indate )VALUES(NULL, :a1, :a2, :a3, :a4, sysdate())";
+$stmt = "INSERT INTO kadai_user_table(id, name, u_id, u_pw )VALUES(NULL, :a1, :a2, :a3)";
 $stmt = $pdo->prepare($stmt);
 $stmt->bindValue(':a1', $name, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':a2', $email, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':a3', $naiyou, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':a4', $age2, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
+$stmt->bindValue(':a2', $u_id, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
+
+//passをハッシュ化
+$stmt->bindValue(':a3', password_hash($u_pw, PASSWORD_DEFAULT), PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
+
 $status = $stmt->execute();
+
+
 
 // データ登録処理後
 if($status==false){
@@ -45,10 +44,11 @@ if($status==false){
 
 }else{
   //５．index.phpへリダイレクト
+  $pw = password_hash('u_pw', PASSWORD_DEFAULT);
   header("Location: main.php");
   exit;
 
 }
+
+
 ?> 
-
-

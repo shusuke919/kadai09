@@ -19,6 +19,7 @@
     <div class="navbar-header"><a class="navbar-brand" href="qu.php">集計</a></div>
     <div class="navbar-header"><a class="navbar-brand" href="login.php">ログイン</a></div>
     <div class="navbar-header"><a class="navbar-brand" href="logout.php">ログアウト</a></div>
+    <div class="navbar-header"><a class="navbar-brand" href="signup.php">ユーザー登録</a></div>
     </div>
 </header>
 <!-- Head[End] -->
@@ -53,7 +54,8 @@
      <input type="submit" value="送信">
     </fieldset>
   </div>
-  </main>
+ 
 </form>
+</main>
 </body>
 </html>
